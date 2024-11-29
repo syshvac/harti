@@ -2028,35 +2028,50 @@ class="county"
 
 
     // Tooltip element
-    const tooltip = document.getElementById("tooltip");
+const tooltip = document.getElementById("tooltip");
 
-    // Add interactivity to counties
-    document.querySelectorAll(".county").forEach((county) => {
-      county.addEventListener("mouseover", (e) => {
-        const countyId = e.target.id; // Get county ID (e.g., ro-ct)
-        const countyName = e.target.getAttribute("name"); // Get county name
-        const data = candidateData[countyId]; // Fetch data for the county
+// Add interactivity to counties
+document.querySelectorAll(".county").forEach((county) => {
+  county.addEventListener("mouseover", (e) => {
+    const countyId = e.target.id; // Get county ID (e.g., ro-ct)
+    const countyName = e.target.getAttribute("name"); // Get county name
+    const data = candidateData[countyId]; // Fetch data for the county
 
-        // Tooltip content
-        tooltip.innerHTML = `
-          <b>${countyName}</b><br>
-          Camera Deputaților: Poziția ${data?.deputati || "N/A"}<br>
-          Senat: Poziția ${data?.senat || "N/A"}
-        `;
-        tooltip.style.display = "block";
-        tooltip.style.left = e.pageX + 10 + "px";
-        tooltip.style.top = e.pageY + 10 + "px";
+    // Tooltip content
+    tooltip.innerHTML = `
+      <b>${countyName}</b><br>
+      Camera Deputaților: Poziția ${data?.deputati || "N/A"}<br>
+      Senat: Poziția ${data?.senat || "N/A"}
+    `;
+    tooltip.style.display = "block";
+    tooltip.style.left = e.pageX + 10 + "px";
+    tooltip.style.top = e.pageY + 10 + "px";
+
+    // Change color for all counties with id="diaspora"
+    if (countyId === "Diaspora") {
+      document.querySelectorAll('.county#Diaspora').forEach((item) => {
+        item.style.fill = '#00aeef'; // Sky Blue
       });
+    }
+  });
 
-      county.addEventListener("mousemove", (e) => {
-        tooltip.style.left = e.pageX + 10 + "px";
-        tooltip.style.top = e.pageY + 10 + "px";
-      });
+  county.addEventListener("mousemove", (e) => {
+    tooltip.style.left = e.pageX + 10 + "px";
+    tooltip.style.top = e.pageY + 10 + "px";
+  });
 
-      county.addEventListener("mouseout", () => {
-        tooltip.style.display = "none";
+  county.addEventListener("mouseout", (e) => {
+    tooltip.style.display = "none";
+
+    // Reset color for all counties with id="diaspora"
+    if (e.target.id === "Diaspora") {
+      document.querySelectorAll('.county#Diaspora').forEach((item) => {
+        item.style.fill = '#c40075'; // Fandango
       });
-    });
+    }
+  });
+});
+
   </script>
 </body>
 </html>
